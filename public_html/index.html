@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Tree Manager</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Load jQuery -->
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+
+
+    </head>
+    <body>
+        <div class="container-fluid">
+            <h1>Tree Manager</h1>
+
+            <p>
+                You have viewed this page
+                <span id="count">an untold number of</span>
+                time(s).
+            </p>
+            <div class="container">
+                <form name="add_node_to_tree" onsubmit="return validateForm()" method="post">
+                    <div class="row">
+                        <label for="new_node">Add Node To:</label>
+                        <input id="new_node" name="new_node" type="text" value="PID" required/>
+                    </div>
+                    <div class="row">
+                        <input class="btn btn-default" type="submit" value="Add" />
+                    </div>
+                </form>
+            </div>
+            <div class="container">
+                <form name="clear_storage" onsubmit="return clear_storage()" method="post">
+                    <div class="row">
+                        <input class="btn btn-danger" type="submit" value="Clear Local Storage" />
+                    </div>
+                </form>
+            </div>            
+        </div>
+
+
+
+
+        <script>
+            function clear_storage() {
+                localStorage.clear();
+                alert('Local Storage Cleared');
+            }
+            function isNumber(n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
+            }
+
+            function storeNode(parent_id) {
+                //count nodes and set id for new node
+                var nodes = localStorage.getItem('nodes[]');
+                console.log(nodes);
+                var number_of_nodes = nodes.length;
+                var node = {};
+                node.id = number_of_nodes + 1;
+                node.parentId = parent_id;
+                localStorage.setItem('nodes[]', {"id": node.id, "parentId": parent_id});
+            }
+
+            function validateForm() {
+                var value = document.forms["add_node_to_tree"]["new_node"].value;
+                if (!isNumber(value)) {
+                    alert("Parent ID must be number.");
+                    return false;
+                }
+                //if valid store node to storage
+                storeNode(value);
+            }
+
+            if (!localStorage.pageLoadCount) {
+                localStorage.pageLoadCount = 0;
+            }
+            localStorage.pageLoadCount = parseInt(localStorage.pageLoadCount) + 1;
+            document.getElementById('count').textContent = localStorage.pageLoadCount;
+
+
+        </script>
+
+        <script type="text/javascript">
+            if (typeof (Storage) !== "undefined") {
+//                    localStorage.setItem('node1',{"id": 1, "parentId": null, "name": "Test node - depth 0"});
+//                    localStorage.setItem('node2',{"id": 2, "parentId": 1, "name": "Test node - depth 1"});
+//                    localStorage.setItem('node3',{"id": 3, "parentId": 1, "name": "Test node - depth 1"});
+//                    localStorage.setItem('node4',{"id": 4, "parentId": 2, "name": "Test node - depth 2"});
+//                    localStorage.setItem('node5',{"id": 5, "parentId": 2, "name": "Test node - depth 2"});
+//                    localStorage.setItem('node6',{"id": 6, "parentId": 3, "name": "Test node - depth 2"});
+//                    localStorage.setItem('node7',{"id": 7, "parentId": 5, "name": "Test node - depth 3"});
+//                    localStorage.setItem('node8',{"id": 8, "parentId": 5, "name": "Test node - depth 3"});
+//                    localStorage.setItem('node9',{"id": 9, "parentId": 5, "name": "Test node - depth 3"});
+//                    localStorage.setItem('node10',{"id": 10, "parentId": 5, "name": "Test node - depth 3"});
+//                    localStorage.setItem('node11',{"id": 11, "parentId": 6, "name": "Test node - depth 3"});
+
+            }
+            else {
+                alert("Sorry your web browser doesnt support web storage,try latest browser");
+            }
+        </script>
+
+    </body>
+</html>
