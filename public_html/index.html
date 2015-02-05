@@ -30,7 +30,7 @@
                 time(s).
             </p>
             <div class="container">
-                <form name="add_node_to_tree" onsubmit="return validateForm()" method="post">
+                <form name="add_node_to_tree" onsubmit="addNode()" method="post">
                     <div class="row">
                         <label for="new_node">Add Node To:</label>
                         <input id="new_node" name="new_node" type="text" value="PID" required/>
@@ -41,21 +41,19 @@
                 </form>
             </div>
             <div class="container">
-                <form name="clear_storage" onsubmit="return clear_storage()" method="post">
+                <form name="clear_storage" onsubmit="clearStorage()" method="post" action="">
                     <div class="row">
                         <input class="btn btn-danger" type="submit" value="Clear Local Storage" />
                     </div>
                 </form>
             </div>            
         </div>
-
-
-
-
-        <script>
-            function clear_storage() {
+     <script>
+            function clearStorage() {
                 localStorage.clear();
                 alert('Local Storage Cleared');
+                //window.location.reload();
+                return true;
             }
             function isNumber(n) {
                 return !isNaN(parseFloat(n)) && isFinite(n);
@@ -72,7 +70,7 @@
                 localStorage.setItem('nodes[]', {"id": node.id, "parentId": parent_id});
             }
 
-            function validateForm() {
+            function addNode() {
                 var value = document.forms["add_node_to_tree"]["new_node"].value;
                 if (!isNumber(value)) {
                     alert("Parent ID must be number.");
